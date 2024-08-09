@@ -9,7 +9,6 @@ const register = async (userType, data) => {
             .select("uid");
         if (trainer.length > 0) return null;
         else {
-            const hashPass = bcrypt.hashSync(data.pass, 10);
             return knex("trainers").insert({
                 f_name: data.f_name,
                 l_name: data.l_name,
@@ -17,7 +16,7 @@ const register = async (userType, data) => {
                 email: data.email,
                 bio: data.bio,
                 phone: data.phone,
-                hashed_pass: hashPass,
+                hashed_pass: data.hashed_pass,
             });
         }
     } else {
@@ -26,14 +25,13 @@ const register = async (userType, data) => {
             .select("uid");
         if (client.length > 0) return null;
         else {
-            const hashPass = bcrypt.hashSync(data.pass, 10);
             return knex("clients").insert({
                 f_name: data.f_name,
                 l_name: data.l_name,
                 dob: data.dob,
                 email: data.email,
                 phone: data.phone,
-                hashed_pass: hashPass,
+                hashed_pass: data.hashed_pass
             });
         }
     }
